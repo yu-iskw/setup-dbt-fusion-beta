@@ -1,5 +1,7 @@
 # setup-dbt-fusion-beta
 
+[![Test](https://github.com/yu-iskw/setup-dbt-fusion-beta/actions/workflows/test.yml/badge.svg)](https://github.com/yu-iskw/setup-dbt-fusion-beta/actions/workflows/test.yml)
+
 This is a GitHub Action to setup [dbt Fusion](https://www.getdbt.com/product/fusion) in beta.
 
 dbt Fusion is an upcoming dbt Labs product that enables users to manage dbt projects and run dbt commands in a serverless environment. This action simplifies the setup of dbt Fusion within your GitHub Actions workflows, allowing you to easily integrate dbt Fusion into your CI/CD pipelines.
