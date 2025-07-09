@@ -1,0 +1,65 @@
+# Copyright 2025 yu-iskw
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      https://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+name: Setup dbt Fusion
+description: Setup dbt Fusion in beta
+
+outputs:
+  dbt-version:
+    description: The version of dbt Fusion that was installed.
+    value: "${{ steps.install-dbt-fusion.outputs.version }}"
+
+inputs:
+  dbt-version:
+    description: The version of dbt Fusion to install
+    required: false
+
+  package:
+    description: Package to install (dbt, dbt-lsp, etc.)
+    required: false
+    default: ""
+
+  target:
+    description: Target platform (e.g., x86_64-unknown-linux-gnu, aarch64-apple-darwin). Auto-detected if not specified.
+    required: false
+    default: ""
+
+runs:
+  using: composite
+  steps:
+    - name: Install dbt Fusion
+      id: install-dbt-fusion
+      shell: bash
+      env:
+        DBT_DEBUG: 1
+      run: |
+        # Build the install command with available options
+        args=()
+
+        if [ -n "${{ inputs.dbt-version }}" ]; then
+          args+=(--version "${{ inputs.dbt-version }}")
+        fi
+
+        if [ -n "${{ inputs.package }}" ]; then
+          args+=(--package "${{ inputs.package }}")
+        fi
+
+        if [ -n "${{ inputs.target }}" ]; then
+          args+=(--target "${{ inputs.target }}")
+        fi
+
+        # Install dbt Fusion
+        curl -fsSL https://public.cdn.getdbt.com/fs/install/install.sh | sh -s -- "${args[@]}"
+        # Show the version of the installed dbt Fusion
+        dbt --version
