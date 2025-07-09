@@ -19,8 +19,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Setup dbt Fusion
-        uses: ${{ github.repository }}@v1
+      - uses: yu-iskw/setup-dbt-fusion-beta@v1.0.0
 ```
 
 ### Inputs
